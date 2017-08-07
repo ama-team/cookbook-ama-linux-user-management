@@ -1,123 +1,28 @@
 ---
-private_key: &private_key |
-  -----BEGIN RSA PRIVATE KEY-----
-  MIIBywIBAAJhANK0B77h9tqaEnFhGI5MPmzh+O3los/8Dul4XRx6Yb+SA8VxOi+l
-  /gT/NtvfamAA98fPKOE6sX3xGc6ZOI2K0iGsxYrTMP4HJpOOY2xHPd7rEetIzHIL
-  8L9ixLwRgeeX+wIDAQABAmBtYbRbraae2TkVztgWlxIZKD44EewxmKKNJUUBEa9I
-  6h43E46nSb7TDUKHZjYs3JLT3ltvel0LY2IRNMQOE8lYy4iij9JaHKeLbH0k/Hrs
-  5+pS45IZj4qz1LZScDE1AAECMQDtklK6F+b/1sbmX//PBKyUMNSSjcSlw+fSMh3R
-  mAlxK+zL/Sm1ox2tq11LTQ92gAECMQDjDChxSMVc2y6W2MrsudRfn3n52RAcA3wY
-  RMancudd8FTKrNxClv48FYE9s7M4F/sCMQDcoNohJteJWy4Gfrrzx9R6H0sa+3vX
-  sjMVWyOkJX0HVBKqcucMX3rNcWrH5r3ogAECMQCIhpcLB6cl3uZ07oeXMWby2QKP
-  qmZ1ceL89N4/cmiNpCZYePk5UXIuzv+YCqaJ5GECME4w9C5tIJTtWgds+yy2Vbna
-  QDJQjUJJTqhgAElWgm8uXmj0zOBFmTWdiQYa+aioZQ==
-  -----END RSA PRIVATE KEY-----
-public_key: &public_key AAAAB3NzaC1yc2EAAAADAQABAAAAYQDStAe+4fbamhJxYRiOTD5s4fjt5aLP/A7peF0cemG/kgPFcTovpf4E/zbb32pgAPfHzyjhOrF98RnOmTiNitIhrMWK0zD+ByaTjmNsRz3e6xHrSMxyC/C/YsS8EYHnl/s=
-
-attributes: &attributes
-  authorization:
-    sudo:
-      include_sudoers_d: true
-  ama-linux-user-management:
-    complex-scenario:
-      accounts:
-        master:
-          roles:
-            default: ~
-          keys:
-            default:
-              public: *public_key
-              private: *private_key
-              remote:
-                hosts:
-                  bitbucket.org:
-                    user: git
-                    port: 22
-                    options:
-                      ProxyCommand: '/usr/bin/nc -X connect -x 192.0.2.0:8080 %h %p'
-            private:
-              private: *private_key
-            disabled:
-              local: false
-              remote: false
-              private: *private_key
-              public: *public_key
-      partitions:
-        keys:
-          policy:
-            group: none
-          filters:
-            - default
-          impersonation:
-            puppet: ~
-
-    accounts:
-      alpha:
-        roles:
-          cto: ~
-        keys:
-          alpha@home: AAAAB3NzaC1yc2EAAAADAQABAAAAYQCyqs1NO63v8AfyxOY62xVK4vAJctD90LFqu8KKcI69FoPt4c083f13NYty8wxhGHYlNXpYd+qO0fl9LVfPCwrY/YOP6TfSAblPgOvq4RLCsvAQZXR1X0jp6UBJinRDX7c=
-          alpha@work:
-            type: ssh-rsa
-            public: AAAAB3NzaC1yc2EAAAADAQABAAAAYQDL3AQ87EtD/Sn7dNbx4c6xfYetAw5jb7oxLGQielnXBVTSpwpdKre5pr4R0zqhYRbRZgqNqDxoCV5icvZNn1aaBIilFotF31Yyc2PzcBUtfH26Yl1wvRXAHFvaNHDG3l0=
-      beta:
-        roles:
-          ops: ~
-      gamma:
-        roles:
-          developer:
-            php: ~
-      delta:
-        roles:
-          developer:
-            java: ~
-          ops: ~
-    partitions:
-      sudo:
-        policy:
-          group: manage
-        privileges:
-          sudo:
-            enabled: true
-        filters:
-          - ops
-          - cto
-
-      developers:
-        policy:
-          group: manage
-          users: manage
-        filters:
-          - dev
-      devops:
-        policy:
-          group: manage
-          users: manage
-        filters:
-          - dev + ops
-
 driver:
   name: docker
   use_sudo: false
-
 provisioner:
   name: chef_zero
   always_update_cookbooks: true
-  attributes: *attributes
-
 verifier:
   name: inspec
-  attributes: *attributes
   format: junit
   output: test/metadata/acceptance/junit/%{platform}-%{suite}.xml
-
 platforms:
-  - name: ubuntu-14.04
-  - name: ubuntu-16.04
-  - name: centos-7.2
-  - name: centos-6.5
-
+- name: ubuntu-14.04
+- name: ubuntu-16.04
+- name: centos-7.2
+- name: centos-6.5
 suites:
-  - name: keys
-    run_list: []
-    attributes: *attributes
+- name: complex-case-1
+  run_list:
+  - alum-acceptance
+  attributes:
+    history: complex/case-1
+  verifier:
+    inspec_tests:
+    - name: complex case 1
+      path: test/suites/acceptance/default
+    attributes:
+      history: complex/case-1

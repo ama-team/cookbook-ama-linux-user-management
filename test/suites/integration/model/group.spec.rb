@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../../../lib/model/group'
+require_relative '../../../../files/default/lib/model/group'
 
 klass = ::AMA::Chef::User::Model::Group
 

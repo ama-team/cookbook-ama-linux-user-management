@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative '../../../../../lib/planner'
-require_relative '../../../../../lib/model/public_key'
-require_relative '../../../../../lib/model/account'
-require_relative '../../../../../lib/action/account/public_key/add'
-require_relative '../../../../../lib/action/account/public_key/remove'
+require_relative '../../../../../files/default/lib/planner'
+require_relative '../../../../../files/default/lib/model/public_key'
+require_relative '../../../../../files/default/lib/model/account'
+require_relative '../../../../../files/default/lib/action/account/public_key/add'
+require_relative '../../../../../files/default/lib/action/account/public_key/remove'
 
 klass = ::AMA::Chef::User::Planner::Account::PublicKey
 add_klass = ::AMA::Chef::User::Action::Account::PublicKey::Add

@@ -13,7 +13,7 @@ module AMA
             class Assertions
               include Entity::Mapper::DSL
 
-              type = [Enumerable, T: [TrueClass, FalseClass, Assertion]]
+              type = [Enumerable, T: Assertion]
               attribute :content, type, default: [], virtual: true
 
               bound_type = self.bound_type

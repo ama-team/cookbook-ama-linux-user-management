@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require_relative '../../../../lib/planner'
-require_relative '../../../../lib/action/group/append_members'
-require_relative '../../../../lib/action/group/set_members'
-require_relative '../../../../lib/action/group/exclude_members'
-require_relative '../../../../lib/action/group/remove'
-require_relative '../../../../lib/action/group/privilege/grant'
-require_relative '../../../../lib/action/group/privilege/revoke'
-require_relative '../../../../lib/action/group/privilege/purge'
-require_relative '../../../../lib/model/group'
+require_relative '../../../../files/default/lib/planner'
+require_relative '../../../../files/default/lib/action/group/append_members'
+require_relative '../../../../files/default/lib/action/group/set_members'
+require_relative '../../../../files/default/lib/action/group/exclude_members'
+require_relative '../../../../files/default/lib/action/group/remove'
+require_relative '../../../../files/default/lib/action/group/privilege/grant'
+require_relative '../../../../files/default/lib/action/group/privilege/revoke'
+require_relative '../../../../files/default/lib/action/group/privilege/purge'
+require_relative '../../../../files/default/lib/model/group'
 
 klass = ::AMA::Chef::User::Planner::Group
 group_klass = ::AMA::Chef::User::Model::Group

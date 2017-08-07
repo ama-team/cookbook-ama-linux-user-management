@@ -3,11 +3,11 @@
 # rubocop:disable Metrics/BlockLength
 
 require 'set'
-require_relative '../lib/state/builder'
-require_relative '../lib/state/persister'
-require_relative '../lib/planner'
-require_relative '../lib/model/partition'
-require_relative '../lib/model/client'
+require_relative '../files/default/lib/state/builder'
+require_relative '../files/default/lib/state/persister'
+require_relative '../files/default/lib/planner'
+require_relative '../files/default/lib/model/partition'
+require_relative '../files/default/lib/model/client'
 
 resource_name :ama_linux_user_management_accumulator
 default_action :manage

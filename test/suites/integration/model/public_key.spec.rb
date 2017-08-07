@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../../../lib/model/public_key'
+require_relative '../../../../files/default/lib/model/public_key'
 
 klass = ::AMA::Chef::User::Model::PublicKey
 

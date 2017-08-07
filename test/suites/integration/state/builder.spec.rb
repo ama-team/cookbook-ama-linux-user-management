@@ -2,12 +2,12 @@
 
 require 'yaml'
 require 'tempfile'
-require_relative '../../../../lib/state/builder'
-require_relative '../../../../lib/model/client'
-require_relative '../../../../lib/model/partition'
-require_relative '../../../../lib/model/account'
-require_relative '../../../../lib/model/group'
-require_relative '../../../../lib/model/state'
+require_relative '../../../../files/default/lib/state/builder'
+require_relative '../../../../files/default/lib/model/client'
+require_relative '../../../../files/default/lib/model/partition'
+require_relative '../../../../files/default/lib/model/account'
+require_relative '../../../../files/default/lib/model/group'
+require_relative '../../../../files/default/lib/model/state'
 require_relative '../../../support/fixture/state'
 
 klass = AMA::Chef::User::State::Builder

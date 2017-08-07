@@ -2,8 +2,8 @@
 
 require 'logger'
 
-require_relative '../../../lib/state/persister'
-require_relative '../../../lib/state/builder'
+require_relative '../../../files/default/lib/state/persister'
+require_relative '../../../files/default/lib/state/builder'
 require_relative 'solo_runner'
 
 module AMA

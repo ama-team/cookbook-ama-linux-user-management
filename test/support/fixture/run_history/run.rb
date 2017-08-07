@@ -4,8 +4,8 @@ require 'ama-entity-mapper'
 
 require_relative 'resource_matchers'
 require_relative 'assertions'
-require_relative '../../../../lib/model/partition'
-require_relative '../../../../lib/model/client'
+require_relative '../../../../files/default/lib/model/partition'
+require_relative '../../../../files/default/lib/model/client'
 
 module AMA
   module Chef
@@ -33,6 +33,12 @@ module AMA
                   assertion_type.values.flat_map do |assertion_name|
                     assertion_name.values.flat_map(&:content)
                   end
+                end
+              end
+
+              def typed_assertions(type)
+                flat_assertions.select do |assertion|
+                  assertion.type == type
                 end
               end
             end

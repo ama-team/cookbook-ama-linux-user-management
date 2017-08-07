@@ -1,0 +1,565 @@
+# validate that
+# - existing user
+#   - exists
+#   - with his keys
+#   - and his privileges
+# - existing group
+#   - exists
+#   - with privileges
+# - impersonation
+#   - adds keys
+# - vanished edited group
+#   - is not deleted
+#   - it's privileges stay the same
+# - vanished managed group
+#   - gets deleted
+#   - with privileges
+# - vanished edited user
+#   - stays on node as is
+# - vanished managed user
+#   - gets deleted
+#   - with keys
+#   - with privileges
+#   - and impersonation
+# - vanished impersonation source
+#   - revokes keys
+# - vanished private key
+#   - gets deleted
+# - vanished public key
+#   - gets deleted
+#   - from impersonated accounts as well
+
+keys:
+  key1:
+    public: &key1_public AAAAB3NzaC1yc2EAAAADAQABAAABAQDCitBOFsn9up5Ruti+AMCZ7VVep7iGuVOIfYMVCqxBJVfQdDRRrcDzHel/YinC8w8ny9MUYtEtF2DTQMxsaYrvJn3wXbL3SypdDz5prjGeRUxHr1hXBvt2qKnAvenNbPEcGQVKw7Gk/cIlIfzX+ysuhRm0B/9N7f5pPpdX646ioqEH6HZmX35cxbA7qe9XnnbpTiSgzmx5COjvRXlWz223aLkrw6CYC+LEIYv+DtAIYiY5cZ4yj0J4We9iBFAufK2/eBeeLSUtrDYgEGKCaFjRmDF80cu869Z9XMuScMSw2vEO3CiuBFIux3aiU1ZZnwFlde5AnicXZr1kgF0a4Ekb
+    private: &key1_private |
+      -----BEGIN RSA PRIVATE KEY-----
+      Proc-Type: 4,ENCRYPTED
+      DEK-Info: AES-128-CBC,760E76E7FE264097120358F1D74A20D9
+
+      K5BbVq2FxTU6iqLyY6/8Mth2gEmvOIB5ek53E283GQI1aMgKG/TJrkUsfyDEuG1q
+      fifMoxXhC61YDT05tHEBO4X0cfhyfgYFMih27XRn0suHOsSTqlHqxyydWpySJ0k5
+      dPGLawscEei+VAPXn4BkHoF21+bUk4Wm54fxbxPs4shZHkM7F16DbBsg9Jb3sWBT
+      x8g5Ryaah4Ax6lsK7s3QX83R4lcmq2fQ+/xNCYjAbLKAQ0vRsgtaiF3oHAK13D2D
+      Tuac6h66KAPKX9np7MDWdkHe+SCG5TvsXCPxPKt1psAnPhlxPiBjedrxzSRWKhjV
+      jbODd9oGpV9Fg4ty14MeoImVnOjVgdvDegjRnBWXrAn0j40SqFpDvllNgNF83qKU
+      SXrvwmtLKS7Rieah2wXTCRP0BEI51VXa3liXoVE1jcvGUQVnV1/f3ivHARw2ahX6
+      iCD9FUsbxpvf1uzav/38BNlgA0rYapm8knVSStPLF1TOKLNcSoq7tssKzflKqhPG
+      16Pysf74oEiPZSp4v2zczB0w2i57aVHdL4jdiV3SMhMR4o3xbR5m3RPK0/e00Rb+
+      py1GBPIBuye8VtH+7kIg6q0GokpLhhNF3L5GOYpcFZ4RoQFUn83Kaxyq3XQVFH2k
+      DDHGBcqXsOs22HVZKfLBnESOgP2LzYsi6VDgE8fHXSBESikNENYx4IVTK09+TNM7
+      4EQDWJbG1J7bOxyHEpVoANraRZlmGoSppvggYvWk4C3Myvz0az3M10e+xFi2CFHv
+      xzcqjnvh00YFgMV7m4h8OUWk04/VrrhzU2pceWrtZ3nItjf/yC/aUpN5OqyeVpxh
+      +p122ipuLL4bTN4gy3wLstDKDMVlHikBZNRj1Tid7u7xLHgX2lsYu0KeyQMED1Pk
+      cLCHqfW9Ni9vyG1IoqcvpSTbgn5WilS/mY5VGsaxN6uzXW4OVLqZtOBXk12WCD3U
+      /l/lpibTTcJ9bUYzEh0D9gsZAyPYHPY+PYSmFJGmVdQdFoMq0rZ1W0L25g9od+Sr
+      xEGZ4ytXZQ5HDZpCJ+i0YLSsxgDrp0Pi/ZEK3BBY2M/FGoS0noGms6veA5V2towp
+      nVVEK4huSxmaDkTWE+nY6g0rgerylKVW3tY39HPvHdLbkjYArJzQc2ueQtUA+I1Q
+      Olme3+guazQt1eXP2WbzPmnBE+kXZEfH45LNdBFvQG5eafmWRy/d5kNtRAoqewhh
+      YBNJa8mHEyXA9qiQjmULoS1EUEevNHWFT56fAyhdMxlENOIq1+aWEMkNlUC4KyuA
+      X8o90v7EfRBar19zZiIjN95TjKjH3GYQHjgudOrXNFfcqHFuRhHzCXWdh2IykT+F
+      P916MvW16iiu32vAnfJFUUjfrKbBUfYm+htFP1/RJ+ZsRBD6y4Ne9G49856Pwq7N
+      aOjdDQZH/OUX3TaQb/RC65A2OeH3Ta/gh84hRkJNz3KjyydEregWEfb4TRSIWmfR
+      L0kjS5K+i5nQWOpbr85ZQZUgtpKQOSBYhcE7W6w/4AVZ15IT1v6W8adipWwemJnZ
+      7MFNQyCFjb64k2bvQP4fKPMRM72z8Ys8DN3e2ss4oCpCAXSfdzFsT5qZB/7IQCCR
+      -----END RSA PRIVATE KEY-----
+    passphrase: &key5_passphrase
+  key2:
+    public: &key2_public AAAAB3NzaC1yc2EAAAADAQABAAABAQDa5l1pbShsSTSL+Z7hQDBY7Wuoy6kxN7cwwXnJciI679j4B9H5mBrJriQhwgTj9Mc2oqJQAf3lU/63i6Pyf0zJpYcPaDBBOvaJKq3H3KZ7B7k3xiFMF9bwo0+dHlfP2UDK7NEHp/vsi6uuioiwlD6gBd/p3XTfK04+tuJf5REdwa+7dY657UIE1wvlfSjdVhFREcYNOwIkbDU9xQBxpN/F4m16Ji09G30YXyUblaNoR9CHLa9PwkDANo7mOj6vuHeEECZ5+mNavZ1tw2qO0iAKNixeOj4X7Snq6ysIRWcE1LwaqYKbD+c0w8Be+Bbp3Z4ZcY6BqtZCrAF6P6vUH8x9
+    private: &key2_private |
+      -----BEGIN RSA PRIVATE KEY-----
+      Proc-Type: 4,ENCRYPTED
+      DEK-Info: AES-128-CBC,D653BE78CDA24E05C8533DD0A2A975C2
+
+      803ChKFQisyvxVr3TEldNMAZv+p0pHU+heyaD1kBwIkWlRrHNhvTnek0R01AItU+
+      ZdJCuakGP1z09WJKmKN6nHRthKGSe0upZSbTE0zTSKVS1UVoQYKlK7ZRP8Ct/rjR
+      2hI1vg96LDP7raoJHZ3BMGKeItLbH93TaWV5klnjyRnvxioD546ebMIB4pVxtVPi
+      U3MqC5SJrlnW5gj9fmXZcwa2O9G4/kSv2W9AaPVCJT5y0Pzj5+HXhyNKDxza0YGU
+      FN/9IJOLsJHXMNJQ9ld3hXM61j5kvIzi52CfoiNQ3uMv9PGKD/x/ME4hZe0J1rB2
+      BH7UevVcf1AqwGSD0+pE1JPIty1Hag0NSzxd6ljifJMddBKxaRFc5tYSQd0mb8e/
+      Kc5V1WipWzRKIOsNrV7pcSYL9AABqRgceQKeZIb2rv3m5h+uX9P9WeWvuSvJeVD4
+      mqmvv8bT2DCoUyAZ+BVoMF9biZSY7igsXhtu84fHE96+i04+771BQzecD/ciyYKb
+      YodpbSB/q+S47+6Skj29P/nVBwjPlewEslAvJKQgE1PR6EwUVvbsSilbtt6vKv/u
+      uyS0LBN9/Ou+fk2fgBa9hnzHAdB9bfL+V8iep4WaTIyYanyDsRAyzJrRVm1H+UgQ
+      NAkY1gCgXG3TmPrJwiEMfqQlMNb2S6mIVYPDqdJi2IvXx98aNmXUJ6OOcGPRXIgR
+      izcGPyeEKDHi9o1CQCMTiZT3Xhc6gMtsx+nBxRXsV1B6kgtx0YxKj4Q/n/r2ioKd
+      DgQF7Smm19aVxyfvR+Po8FdFGEY/5PwTbTv9b93vEUO7iliuEonYRarGb7wpfV8z
+      4Ug02mU9pSsOL0ZFyOQtK5N7IFTjKGAETVV0Dj70/uACXqxkET5Bihn0K0mbGbrs
+      uZpnR9xEeQdj/uYflJY0SXo1X4HF1HX6eFQtewksnrBcOv7MYfAZ6VmTiI5QC21o
+      mEjAjuMh2/I9se0/mzmlFG+yk1TZ8uVGzJ+w3cjgmQ7Y9O5DA43CAWnRG/gObC11
+      oJSL+yPNAqgx5ovuHHpifzI2IoHWM6f57FpfvusCIRWy5VqUTwDLKSYn3YjC7FPk
+      EwhmMileXpi6jGT/GScMyueiomHRLA3o4UEOdewXWdkr89+g9xXTR288mmXVEuiB
+      YGJA0rkNHmDRcrdejcj5NWB2tlPrR44ana0CCApuhlHZwKvFt+vHgGYxS5PRXYLO
+      PhOFhibG2nkSGzLHFR9PU3FjtbCKeZDUOc+cbpgh2QX34Sk9y2CXpue/rK21oSRk
+      SgY7y107ieZgQ7R4XcH43Tsf0BhJUBFhKFWcQ4+ZlQSIgRMOK4guWj8RyMPss/xZ
+      H+64N2eBOJ2lG6h4KhpxcbhWJFgSPW8oGH2q4I+JQ+eWCcYoMwrXgm159z2tpyrr
+      7RyK8GIHm6021av/3yKHJ1yjXrcbIDnuy5n5xQn6o+qSPOBYtR6dVF2OnH1DCvJD
+      kKzS2bPIhySPGPRvPV5s4dS1bmgoyu7DW+mEvRDcsG20mDVb7FSM9dj5a/o1+yaN
+      5l0v6ObyBeQEyOwQWOn8eZMQntKDlTz9wDZuG3Qc2zIcuXnuwueLVOe49vrGnk9V
+      -----END RSA PRIVATE KEY-----
+    passphrase: &key2_passphrase passphrase-2
+  key3:
+    public: &key3_public AAAAB3NzaC1yc2EAAAADAQABAAABAQDqkq3B/aTwZGuIWe7YEjvqsLR+VPxRymRbsXLINmGSowEfcLlI1vrvFHdHD6DjgtXsIL8M8oFw3rEneFNgsHwTXdQP+UksMaO18zuz5u6YZWSqlGwPvTFRa4jPQmdVTMTZgAs3Das8OHPSioiphB9pj3J59ENhWwZggSmrD8BI++p3lFdDFid3POF7kacOgoLmWJbwGQmD3BOuyjTloc+Bc27pX7T0frgP2g5/Gk5VbVgOLX59On0g3apu/J3h45irHyoCv2tQOQvUOmQHj2UXrL2gJGrXKvT8fvKeZ5ANivN0/3SpxxyRLJbN6IDDO1Rzy10g3FWopUpFFBjRYLe7
+    private: &key3_private |
+      Proc-Type: 4,ENCRYPTED
+      DEK-Info: AES-128-CBC,7C0C3117FBF3F7B40AF0F43A0917BA6D
+
+      PH3N96lF8A4P5NpGY1rD7XYZqRjebDo/02WgxWN1pwocWLDmlkV7ab4nyldUY1Ar
+      f3NiDop4W6ChulKkfJ5iC+agfc6D7ZbmvWdEcNmu+Ul4S7JjL1Y+PU68u1R+5AAd
+      38gRq9sR7BUrDIjXH0eKFAGhIoUofPl5yFTiDLheurLwBsbGwV4yMzOvC0ftdJnK
+      MWlMXFyuWiCcqD+7B2Trhf6/vYP+kBSA7RrhKGGJZG/Ycm8jLAw0oSxO3RZlM2Mw
+      CrNZkb42j878zgHNLqfBCgh410NzSzOy/jW05lxOcb5Adonh+sZTnofBUFBlWt9c
+      Pqk9WY1w3MmHUAtrAbvzbs+wWa/1ZlaL8U4KQ4+qvoUREJgxzhN9Dd0zxGS1gLSY
+      iZdBhPzXi0mFIh9GLjqakptz49tONXKO41UvUUXzD9Cut/UkCBJ5g86jzoLyRxjT
+      amScPSjhWyPDoVnhmDwABh7yUQcuP/C7/9Y7MyHmUQ8mLfxDE/wI00V0qkHUBUBZ
+      FSD3Lb65oHsR09+LOh75L3dyafrfd3nJMqELgZRmK0D7z30zuNOs6TTFopUmIv58
+      Y/ORgH2J0Qul5g3yqA1nZS+AGQC/Vd2X6piSYy4Uy7rWNCu/QEhk3cWAeRijiceY
+      ZIT8RR/ASQdd1vLs+oiqR19+0KCyQOAbek5YZnZdcEe8oAosNOx07uK8gTkF+Kiu
+      wl+nTLucyicZ98KVp7QRQAdiuSub9dL5H/fmbBxvrYpL2ZEQ6l2uC0p9Uu9ufLuB
+      NJnxNSYkuPWZkxROt272VrETTpCpSuH9BA1X6shzUrG+G3DTGxk5KSYgz4Y820d4
+      MtVfbFbzFWRwC3Vx7rR0uz+rla4Gs3+/2kI+J7Z++kkdpHazsqC5HHMWREV9S5v4
+      SvBYJqJSr0YTwnOTcpniLbAegMKrXX9RwK4icVGYeD8dXlEEMrLE9V1UIEY1t2pX
+      UkFYc5OBSyzGA4MT67sC084gtNoomPLXO98i7WdpfFc33MtqFjYixhWcgB4Jm1u0
+      4bJr4rdJYgDUHeq7dkGg5aTX7eFTfsVhAkR2k/El9hsDihUExZP3fzVTGiyynXwQ
+      pI5mZ3XOPRiK+kJaMM79zzW5G4pPWJAq+tiwCdB8mgxXmHExaHO6XY9EWCcpsty+
+      jCwsel8Znu4hrQdxdxvxU8EcZ4CHCZ3IlViMUFJMDCTIHuuMCRsLZLcmszvoFVPf
+      dipzabFIX6SwsobWhb5XeDT4gF1Y4eV8rPJhiSHuY8Y9Ws6HQloru1EMHWt7GdAB
+      L6pSzMWPtPfNePYTsMYbk8HN2cKatHxULkh2wbWfA01Lt0vNzVT9Q8ZCsQYrB350
+      +Ht+kzyE6IaKvu71T7NCjd/stDFBTdjI6Ga6Xmb0KIjNY9KKRZMCzUqkg82BLCUz
+      qLfBfnyv+Bx0snodd3IxlJMteSNGIr1y05iZ8UBtI8v5Q/+ycz3kriSdr5AiPMrc
+      uydSJgQPHqb84AdUlMPE9/vkryRtVHodyPny9EfAa5eHx3uW4EHQzBqdAXC3d2IQ
+      wPDT9MaFekFhivFNq9adH9i05IL9gSf3OPaiOHguu6N0UrnDkMtrwMKPjbr57re7
+      -----END RSA PRIVATE KEY-----
+    passphrase: &key3_passphrase passphrase-3
+  key4:
+    public: &key4_public AAAAB3NzaC1yc2EAAAADAQABAAABAQCU3PptX8+9mVlwkYLaJhYZhCUYf8wyrAmIfMauvca8QiuNB7bYMMTDu1GjzDFwGkD1E+4sAM3mr3aeXkyZaWPh+7du4nGFmvbHMEqM5MykXVAFkXCQ4G8xxoj6wMwiY730xzGw8jHZ0ZuijHA1DFDpec3+Rv+03b6Oz3dzzG9OPM9x+X33DgsYOpPtQmbqERsgkWKz7gAtf/+4QPemKLArK+0t9bZaHi2C+TZvsxys1K7tC1n8xLt7jtlh6MMGHfLtziRLf7626D7Udm6XH+cYIK84w6gm5DdBzNZqb6f+aPUBfm3lT3JZPsmBXhJ1WaslrMqrzlt5PyZbNel5qKlr
+    private: &key4_private |
+      -----BEGIN RSA PRIVATE KEY-----
+      Proc-Type: 4,ENCRYPTED
+      DEK-Info: AES-128-CBC,EA0841DD62CCCE1C1752F54264DF8C67
+
+      zSh0fZ/TMbIitFvYT1wa4O0xBMe6CMyaNwxg2uZeLbIY6Nkz8+oLRuXL5PSmcg8G
+      nEWJJpZ7+JrD97sRXAIUm6Sx7TD8/n9qkB3q1AAwl56tSak7MFNwTmgfQ4uN5sER
+      kqat/8vjId+1hBGLEwFVHvR3yoo1AdYI9bNrZbn9VcUw09rOVfFbA8xrfvD5oXnG
+      1GlNYsy5KAM3lzXbuk7FQmLVWIAeT1uMOhsl7bwBY8x1iIrwr5+xIVVUd82L7+vM
+      BiQ5m00ngLY6hRbFXsuDTeYKOYgN8LUtAU6HlX48TTS6HDqvV1MerXCgymdh2mTo
+      VWUQpblW/ToI+FpMXIEM9UdRfF3ZEdqI0Scm1Uo7kr1F3C/W7/K5Uw0CYEfwnkZF
+      vDJ4THpRPSd1zjahPOiqpMklZjmV/0jLMDyVgkEVm3HLZLBDz0d0clB0cgmaqMKF
+      A75zS84NN6/wDnH4FBS993XBetYl2Vx/dlOcOKxxQAye2XvEm76zql/8mElS7KzJ
+      r4osvBksSO8FsR8ROt+nUO3MKaFQ/BpB85lcT8fGXJiHCxIZbByV+wIWaX33qIGm
+      Fahl5z+g1CnGh2h5rkhnkk+rTakAfADlZ7RdIxbvfogUB/6zbxPZKHzyTm0uqaCx
+      KMyVdLjhphQl1MKPPfzdwWGIhMUfJ/8KLzdnTTldH/AKK/4vOXUXAVLnuhbDnHdW
+      aQPKFx+6UoLLL+EStJ8wTA6Cm0QJ5QQMu21jDWTxt+WtvOI0prdY4Ud6kTAVVmEq
+      /R3DCg3P2CFVDq4vv1LEF55OlS55OTRiyvIJ93Lqs7u7lTVRizE8zQllvb9mWT9v
+      POSPZ9zXPwX11Pa3M39XtlIpYvVw2/wU+70OLTnTIq1FEkq7yQ9yYa/2M9KCEEku
+      G+HK4pLnmcAGHkGs0RC6IFl/ffJeZJDAgFkprTafDooVIpo7z7as8XppLK1Fzc2M
+      5XqPZxP1nBMNFB7M3X0KvY3c8q3HiMPmr10JCjrbeN/DRFxO5p8X8eK4tH1fBsAL
+      EyOJERk13H9Lc/0YujE0dVvEotbnziqCy2C0UfF7ObPTK0D4/Cr0zlAso0MmEUhl
+      Wjh9TJoDSRpaIt/Y5hrpqNeyV969KB7G2SV/CHfx5S4Vvybn8ao36Kq/by+YUrNX
+      2FBxW6APA3tJFZYD0HP66vm9tyHvklsHw3en41ZUJtmDQXdzQu3XO2VwUdXo0bwK
+      4DB50Ty6eR1yn/S+dBRyw9vyPerp39sSUocsImWnH3CSOuHNC3OHi+vVDXQmqVuu
+      EZ3dQB+McJhx59aRmisiH4y+IWU9zmerPbs4edZjdm/Io3jbzXFCf+guDPOIFtKX
+      COSYx4dLRY/O/rJ9vcmyqa9yR1fPv8TLciuzZ5Pe9K8zyV6PKJ15uByerI+PQ+Mj
+      pZNXCLAcU1C/uUXTSUEjxc1W7c4JT2Ahmp/PTTvf+wP8KfPFcFwywkIt2Y6ute3v
+      40XFE37I3gr32b1OrugmG8ch8jErNZ2i14Epr5M1JNVPEy+G2jWkGF8pGEO5xH2w
+      HzNd3MDWCsO9QctA1vlOlma0QKzf6i25jRq8W+37f8eGTWv9Xp1Df483zjL8Y+Vu
+      -----END RSA PRIVATE KEY-----
+    passphrase: &key4_passphrase passphrase-4
+  key5:
+    public: &key5_public AAAAB3NzaC1yc2EAAAADAQABAAABAQCujPmejy4zMw1t0zrD1i4dgikM+kJXEN7bsMuKNsbKwjaInK7C4G1mhMqmAYVGKH17uVYTCXE8l2QTkH1qpspHjOMXqlq0y0ylwhf5oL8K+BvqKsHw/YelcXvh1fW+6tYAdWjwOr6HQ8malxGZG2vGx9p3NLqy/IxmHSzf0WLSlj+mNOItQitr/2+iTZbVm1uC/6W79q+Rd1z1QLZlvXlLHkCPUEmGuhu74KoB5/ZVDzx+KEbtq8BN53dnuGKKteu6kQoh9iQ3++CF6rrJk2/xk0D8czoqUpALIDxZ/yiwsPEEp7HaqCen1rUyU4tDBJm/HNu6TWIjv+SSfXmuBLrl
+    private: &key5_private |
+      -----BEGIN RSA PRIVATE KEY-----
+      Proc-Type: 4,ENCRYPTED
+      DEK-Info: AES-128-CBC,00F03950EB0C75D06DD3521CB3049247
+
+      E1vTLjFFMkXOtBOF+HB+BaXh8bMnTvfXroedO9Uqq2H2KbIwiiManH7oKL4zXjRX
+      eQ+AbR5DmXz9fhWIGLhpRD51zm4w+P3EvRZLZ4xKYsEN3KJCuIHO3RnVpZHL7EKO
+      kbVRa/4t8ZdDioOd8Qv65IFl93vqq9DHu5F1Z/PoA5g1gmLme0026ccbaqZumu9u
+      RExKCXtGrywo/lwdziz2h108EpeqwzrXDb/0Lpyf6o6xnYkBUBBJHKCHhdkVc0Ig
+      cIIYDUPaAZjbvfiu5c84KFHfSGyAjAh4al77QrfRi6cev3owrsaQUV7SIyLdbUPv
+      28+TGtJFKuAiNIJ1PfQ+4LPra70wajx1PKviKTDwmYJBaUP9P7oLmKtUtSS1J0ou
+      kRd6oH0HKdC/0lgdKFtDM0oAamaH7Vn7ileFeCEM5SO7OFxCgpfG/V5dcK+VpDzD
+      itNIPiRJ09O7++WvRAMY5Evoh9x7GnQTuR75mYrhGiuxKJTiDrfk702z6TgGteCo
+      cs4ox8iSfWhB3K1EpaO6p/QQqNj7kEdY+v3CfdSFSr6jtUi8thZzyk/OxZyeCRc5
+      QGYkH0w4lPwaLmjlh6+1a+tU5akBrMQixZfIyLhQP7BGOgVg48iABozhzta2sNYX
+      oZXn9chUm57dKJ/KK5Vuy1sKAZL43I0kTMWjoCT17APq02bVxcJTPBr+9yb6mcTM
+      eHRIs4q5QQpdwP5cHBuCC0HDT+KZ0aFFSKtxEn1WPd/Tq78/SUzhn1I7ebI7NLqb
+      dsTOlYBSLvb3ADjz0uxVwrza7Bfr5LIEo/VQKHx88iAenureXuWj++W+pTIIuJ7m
+      y/IiJwm97SH5ZpKIvnNR8pKqNPzihFGI1Lm8VAXfy0k67eu0hl6lve8/geBkhMvU
+      ctM+m3+N24SSNlOEWKBKxUepoFzRZLvNoHhlkBPdb2DwEGcnEpm/1W8SqeCt1A5b
+      8M6n1ylNMBXEg0oGXGO0JlL8V91urBvmd7kA6go2zfE39zgWdkP7iEQjHz5joxC8
+      n6to0zsJHwUoMqUVghp9a/hYnwJIoVEJoMT++qW5Vso/V/tUlItJ8Tq3UmVDJKr/
+      OfiQSr5cfNU4ZF46YN4L64d3iC5AfSF9vdjKVhX0Ho7nrCLDyibHz+hr0QShBuLH
+      dbrVf8aMOZIqMx12U5/eUkg5mhPjIfWyQ/WbvffOZdf2zwkofxvtzB3ApvQ+raDU
+      wXkqtl8K8KkYU/Ztlm1cpcrlQctId+tvZHvaBt1tRCQ8EqoGGQfkiV5ZjqCmogA3
+      ScRmIt7YJzxxcQcy/mr16L2JajEKuJw+iqMV8S73QaKgb6OB3d68WKM0Az3lABfB
+      zRpgWyQxnlsJYjld7Ua3TzPKMzFb+ZWx7ujUwifxriGjnYWMVNRMDzlepRnnvX6P
+      XYexqOjQwQcZnhwcNBVs9E7Nl0vnKs3kNf/gHVdMylGXkPcB4XUASwwLSDGr0Jln
+      xvJWiTDv/jmT/cfADz34ZTff+KXJR6rHO1xtGyS77ZTjkRKg75ysDDNoW0qX+6ET
+      B1sFdxtvsegubh5O7b34Pw9B3hVGdd1w/DkvUHZZP7qBxqS48HWjROn1TcUR9z2m
+      -----END RSA PRIVATE KEY-----
+    passphrase: &key5_passphrase passphrase-5
+
+clients:
+  # stays to the end
+  chef:
+    before: &chef_client_before
+      roles:
+        superuser: ~
+        bot-supervisor: ~
+      private_keys:
+        id_rsa:
+          content: *key1_private
+          install_public_key: true
+          remotes:
+            server-1: chef
+            server-2: chef
+        reserve:
+          content: *key2_private
+      public_keys:
+        reserve:
+          content: *key2_public
+    after: &chef_client_after
+      roles:
+        superuser: ~
+      private_keys:
+        id_rsa:
+          content: *key1_private
+          install_public_key: true
+          remotes:
+            server-1: chef
+  # edited user, stays on the node after it has gone
+  cto: &cto_client
+    roles:
+      superuser: ~
+    private_keys:
+      id_rsa: *key3_private
+    public_keys:
+      id_rsa: *key3_public
+  # managed user, removed from node after it has gone
+  inspector: &inspector_client
+    roles:
+      inspector: ~
+      materialized-sudo: ~
+    private_keys:
+      id_rsa: *key4_private
+    public_keys:
+      id_rsa: *key4_public
+  engineer: &engineer_client
+    roles:
+      engineer: ~
+    private_keys:
+      id_rsa: *key5_private
+    public_keys:
+      id_rsa: *key5_public
+
+partitions:
+  # stays until the end
+  superuser: &su_partition
+    policy:
+      account: edit
+      group: edit
+    filters:
+      - superuser
+    privileges:
+      sudo: ~
+    impersonate:
+      root: ~
+  # gets deleted
+  inspection-team: &inspection_partition
+    policy:
+      account: manage
+      group: manage
+    filters:
+      - inspector
+    impersonation:
+      root: ~
+    privileges:
+      sudo: ~
+  # gets deleted
+  engineers: &engineer_partition
+    policy:
+      account: manage
+      group: manage
+    filters:
+      - engineer
+    impersonation:
+      root: ~
+    privileges:
+      sudo: ~
+  # stays to the end
+  materialized-sudo: &matsudo_partition
+    policy:
+      group: none
+    filters:
+      - materialized-sudo
+    privileges:
+      sudo: ~
+  # gets deleted
+  bot-supervisors: &botsup_partition
+    policy:
+      group: manage
+    filters:
+      - bot-supervisor
+    impersonation:
+      bot: ~
+
+functional: false
+acceptance: true
+runs:
+  - clients:
+      chef: *chef_client_before
+      cto: *cto_client
+      inspector: *inspector_client
+      engineer: *engineer_client
+    partitions:
+      superuser: *su_partition
+      inspection-team: *inspection_partition
+      engineers: *engineer_partition
+      materialized-sudo: *matsudo_partition
+      bot-supervisors: *botsup_partition
+    resources:
+      user:
+        chef: create
+        cto: create
+        inspector: create
+        bot: create
+      group:
+        superuser: create
+        inspection-team: create
+        engineers: create
+        bot-supervisor: create
+      ssh_private_key:
+        'chef:chef:id_rsa':
+          action: create
+          properties:
+            content: *key1_private
+        'chef:chef:reserve':
+          action: create
+          properties:
+            content: *key2_private
+        'cto:cto:private':
+          action: create
+          properties:
+            content: *key3_private
+    assertions:
+      user:
+        chef:
+          it: exist
+          groups:
+            - include superuser
+            - include bot-supervisors
+        cto:
+          it: exist
+          groups: include superuser
+        inspector:
+          it: exist
+          groups: include inspection-team
+        engineer:
+          it: exist
+          groups: include engineers
+        bot:
+          it: exist
+      group:
+        superuser:
+          it: exist
+        bot-supervisors:
+          it: exist
+        inspection-team:
+          it: exist
+        engineers:
+          it: exist
+      private_key:
+        'chef:chef:id_rsa':
+          it: exist
+          content:
+            - [eq, *key1_private]
+        'chef:chef:reserve':
+          it: exist
+          content:
+            - [eq, *key2_private]
+        'cto:cto:id_rsa':
+          it: exist
+          content:
+            - [eq, *key3_private]
+        'inspector:inspector:id_rsa':
+          it: exist
+          content:
+            - [eq, *key4_private]
+        'engineer:engineer:id_rsa':
+          it: exist
+          content:
+            - [eq, *key5_private]
+      public_key:
+        'chef:chef:id_rsa':
+          it: exist
+          content:
+            - [eq, *key1_public]
+        'chef:chef:reserve':
+          it: exist
+          content:
+            - [eq, *key2_public]
+        'cto:cto:id_rsa':
+          it: exist
+          content:
+            - [eq, *key3_public]
+        'inspector:inspector:id_rsa':
+          it: exist
+          content:
+            - [eq, *key4_public]
+        'engineer:engineer:id_rsa':
+          it: exist
+          content:
+            - [eq, *key5_public]
+      authorized_keys:
+        chef:
+          it:
+            - [include, *key1_public]
+            - [include, *key2_public]
+        cto:
+          it:
+            - [include, *key3_public]
+        inspector:
+          it:
+            - [include, *key4_public]
+        engineer:
+          it:
+            - [include, *key5_public]
+        root:
+          it:
+            - [include, *key1_public]
+            - [include, *key2_public]
+            - [include, *key3_public]
+            - [include, *key4_public]
+            - [include, *key5_public]
+        bot:
+          it:
+            - [include, *key1_public]
+            - [include, *key2_public]
+      ssh_config:
+        'chef:server-1':
+          it: exist
+          User: git
+        'chef:server-2':
+          it: exist
+          user: git
+      group_sudo_privilege:
+        superuser:
+          it: exist
+        engineers:
+          it: exist
+        inspection-team:
+          it: exist
+      user_sudo_privilege:
+        inspector:
+          it: exist
+  - clients:
+      chef: *chef_client_after
+    partitions:
+      superuser: *su_partition
+      materialized-sudo: *matsudo_partition
+    assertions:
+      user:
+        chef:
+          it: exist
+          groups:
+            - include superuser
+            - not include bot-supervisors
+        cto:
+          it: exist
+          groups: include superuser
+        inspector:
+          it: exist
+          groups: include inspection-team
+        engineer:
+          it: exist
+          groups: include engineers
+        bot:
+          it: exist
+      group:
+        superuser:
+          it: exist
+        bot-supervisors:
+          it: exist
+        inspection-team:
+          it: exist
+        engineers:
+          it: exist
+      private_key:
+        'chef:chef:id_rsa':
+          it: exist
+          content:
+            - [eq, *key1_private]
+        'chef:chef:reserve':
+          it: not exist
+        'cto:cto:id_rsa':
+          it: exist
+          content:
+            - [eq, *key3_private]
+        'inspector:inspector:id_rsa':
+          it: not exist
+        'engineer:engineer:id_rsa':
+          it: not exist
+      public_key:
+        'chef:chef:id_rsa':
+          it: exist
+          content:
+            - [eq, *key1_public]
+        'chef:chef:reserve':
+          it: exist
+          content:
+            - [eq, *key2_public]
+        'cto:cto:id_rsa':
+          it: exist
+          content:
+            - [eq, *key3_public]
+        'inspector:inspector:id_rsa':
+          it: exist
+          content:
+            - [eq, *key4_public]
+        'engineer:engineer:id_rsa':
+          it: exist
+          content:
+            - [eq, *key5_public]
+      authorized_keys:
+        chef:
+          it:
+            - [include, *key1_public]
+            - [include, *key2_public]
+        cto:
+          it:
+            - [include, *key3_public]
+        inspector:
+          it:
+            - [include, *key4_public]
+        engineer:
+          it:
+            - [include, *key5_public]
+        root:
+          it:
+            - [include, *key1_public]
+            - [include, *key2_public]
+            - [include, *key3_public]
+            - [include, *key4_public]
+            - [include, *key5_public]
+        bot:
+          it:
+            - [include, *key1_public]
+            - [include, *key2_public]
+      ssh_config:
+        'chef:server-1':
+          it: exist
+          User: git
+        'chef:server-2':
+          it: exist
+          user: git
+      group_sudo_privilege:
+        superuser:
+          it: exist
+        engineers:
+          it: exist
+        inspection-team:
+          it: exist
+      user_sudo_privilege:
+        inspector:
+          it: exist

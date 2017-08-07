@@ -2,8 +2,8 @@
 
 require 'yaml'
 
-require_relative '../../../lib/planner'
-require_relative '../../../lib/model/state'
+require_relative '../../../files/default/lib/planner'
+require_relative '../../../files/default/lib/model/state'
 require_relative '../../support/fixture/state'
 
 klass = ::AMA::Chef::User::Planner

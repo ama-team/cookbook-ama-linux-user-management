@@ -2,6 +2,7 @@
 
 require 'pathname'
 require 'yaml'
+require 'ama-entity-mapper'
 
 module AMA
   module Chef
@@ -15,28 +16,33 @@ module AMA
               path = (0..1).reduce(__dir__) do |directory, *|
                 ::File.dirname(directory)
               end
-              Pathname.new(path)
+              ::Pathname.new(path)
             end
 
             def fixture_root
               root.join('fixture')
             end
 
+            def single(name, id, type)
+              regexp = /\.yml$/
+              id = "#{id}.yml" unless id =~ regexp
+              path = fixture_root.join(name).join(id)
+              content = ::IO.read(path)
+              data = ::YAML.safe_load(content, [], [], true)
+              AMA::Entity::Mapper.map(data, type).tap do |instance|
+                instance.id = id.sub(regexp, '')
+              end
+            rescue StandardError => e
+              raise "Unexpected error during loading #{path}: #{e.message}"
+            end
+
             def load(name, type)
               root = fixture_root.join(name)
               pattern = "#{root}/**/*.yml"
               Dir.glob(pattern).map do |path|
-                begin
-                  path = ::Pathname.new(path)
-                  content = ::IO.read(path)
-                  data = ::YAML.safe_load(content, [], [], true)
-                  relative_path = path.relative_path_from(root)
-                  AMA::Entity::Mapper.map(data, type).tap do |instance|
-                    instance.id = relative_path.to_s.sub(/\.yml$/, '')
-                  end
-                rescue StandardError => e
-                  raise "Unexpected error during loading #{path}: #{e.message}"
-                end
+                path = ::Pathname.new(path)
+                relative_path = path.relative_path_from(root)
+                single(name, relative_path.to_s, type)
               end
             end
 
@@ -44,6 +50,9 @@ module AMA
               instance = self
               target.define_singleton_method(:each) do |*args, &block|
                 instance.load(name, type || target).send(:each, *args, &block)
+              end
+              target.define_singleton_method(:single) do |id|
+                instance.single(name, id, type || target)
               end
               target.send(:extend, ::Enumerable)
             end

@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require_relative '../../../../lib/planner'
-require_relative '../../../../lib/action/account/create'
-require_relative '../../../../lib/action/account/remove'
-require_relative '../../../../lib/action/account/privilege/grant'
-require_relative '../../../../lib/action/account/privilege/revoke'
-require_relative '../../../../lib/action/account/privilege/purge'
-require_relative '../../../../lib/model/account'
+require_relative '../../../../files/default/lib/planner'
+require_relative '../../../../files/default/lib/action/account/create'
+require_relative '../../../../files/default/lib/action/account/remove'
+require_relative '../../../../files/default/lib/action/account/privilege/grant'
+require_relative '../../../../files/default/lib/action/account/privilege/revoke'
+require_relative '../../../../files/default/lib/action/account/privilege/purge'
+require_relative '../../../../files/default/lib/model/account'
 
 klass = ::AMA::Chef::User::Planner::Account
 create_action_klass = ::AMA::Chef::User::Action::Account::Create

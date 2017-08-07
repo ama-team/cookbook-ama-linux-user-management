@@ -2,13 +2,14 @@
 
 require 'yaml'
 require 'logger'
+require 'time'
 
 require_relative '../../../../support/chefspec/runner_factory'
 require_relative '../../../../support/fixture/run_history'
-require_relative '../../../../../lib/model/state'
-require_relative '../../../../../lib/planner'
-require_relative '../../../../../lib/state/builder'
-require_relative '../../../../../lib/state/persister'
+require_relative '../../../../../files/default/lib/model/state'
+require_relative '../../../../../files/default/lib/planner'
+require_relative '../../../../../files/default/lib/state/builder'
+require_relative '../../../../../files/default/lib/state/persister'
 
 recipe = 'alum-functional::accumulator'
 
@@ -32,9 +33,11 @@ describe 'recipe' do
     end
 
     ::AMA::Chef::User::Test::Fixture::RunHistory.each do |history|
+      next unless history.functional
+
       it "should comply with history '#{history.name}'" do |test_case|
         # Tell CI we're still alive
-        puts "Validating history #{history.name}"
+        puts "#{Time.now.utc.iso8601} Validating history #{history.name}"
 
         current_state = ::AMA::Chef::User::Model::State.new
 

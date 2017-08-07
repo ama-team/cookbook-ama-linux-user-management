@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../../../action'
-require_relative '../../../../lib/handler/privilege'
+require_relative '../../..//handler/privilege'
 
 module AMA
   module Chef

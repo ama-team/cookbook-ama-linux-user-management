@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative '../../../../lib/model/partition'
-require_relative '../../../../lib/model/client'
-require_relative '../../../../lib/model/client/role_tree'
+require_relative '../../../../files/default/lib/model/partition'
+require_relative '../../../../files/default/lib/model/client'
+require_relative '../../../../files/default/lib/model/client/role_tree'
 
 klass = AMA::Chef::User::Model::Partition::Filter
 client_klass = AMA::Chef::User::Model::Client

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative '../../../../../lib/planner'
-require_relative '../../../../../lib/model/privilege'
-require_relative '../../../../../lib/model/group'
-require_relative '../../../../../lib/action/group/privilege/grant'
-require_relative '../../../../../lib/action/group/privilege/revoke'
-require_relative '../../../../../lib/action/group/privilege/purge'
+require_relative '../../../../../files/default/lib/planner'
+require_relative '../../../../../files/default/lib/model/privilege'
+require_relative '../../../../../files/default/lib/model/group'
+require_relative '../../../../../files/default/lib/action/group/privilege/grant'
+require_relative '../../../../../files/default/lib/action/group/privilege/revoke'
+require_relative '../../../../../files/default/lib/action/group/privilege/purge'
 
 klass = ::AMA::Chef::User::Planner::Group::Privilege
 privilege_klass = ::AMA::Chef::User::Model::Privilege

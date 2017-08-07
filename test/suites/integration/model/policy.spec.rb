@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../../../lib/model/policy'
+require_relative '../../../../files/default/lib/model/policy'
 
 klass = ::AMA::Chef::User::Model::Policy
 

@@ -17,6 +17,8 @@ module AMA
             attribute :id, String, nullable: true
             attribute :name, String, nullable: true
             attribute :runs, [Enumerable, T: Run]
+            attribute :functional, TrueClass, FalseClass, default: true
+            attribute :acceptance, TrueClass, FalseClass, default: false
 
             def name
               @name || @id.gsub(%r{[\-\/]+}, ' ')
