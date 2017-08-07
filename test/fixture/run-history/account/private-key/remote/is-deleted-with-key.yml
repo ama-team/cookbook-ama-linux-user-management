@@ -1,0 +1,37 @@
+runs:
+  - clients:
+      ops:
+        roles:
+          ops: ~
+        private_keys:
+          id_rsa:
+            content: aabbccdd
+            validate: false
+            remotes:
+              tunnel: ~
+    partitions: &partitions
+      ops: ~
+    resources:
+      ssh_config:
+        'ops:ops:id_rsa:tunnel':
+          action: add
+          properties:
+            options:
+              IdentityFile: /home/ops/.ssh/id_rsa
+    assertions:
+      ssh_config:
+        'ops:ops:id_rsa:tunnel':
+          it: exist
+          IdentityFile: eq /home/ops/.ssh/id_rsa
+  - clients:
+      ops:
+        roles:
+          ops: ~
+    partitions: *partitions
+    resources:
+      ssh_config:
+        'ops:ops:id_rsa:tunnel': remove
+    assertions:
+      ssh_config:
+       'ops:ops:id_rsa:tunnel':
+          it: not exist

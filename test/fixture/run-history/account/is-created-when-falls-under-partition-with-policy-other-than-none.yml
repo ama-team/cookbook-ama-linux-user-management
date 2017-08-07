@@ -1,0 +1,31 @@
+runs:
+  - clients:
+      ops:
+        roles:
+          ops: ~
+      cto:
+        roles:
+          cto: ~
+    partitions:
+      ops:
+        policy:
+          account: edit
+        filters:
+          - ops
+      cto:
+        policy:
+          account: manage
+        filters:
+          - cto
+    resources:
+      user:
+        ops: create
+        cto: create
+    assertions:
+      user:
+        ops:
+          it:
+            - exist
+        cto:
+          it:
+            - exist

@@ -1,0 +1,41 @@
+runs:
+  - clients:
+      ops:
+        roles:
+          ops: ~
+        private_keys:
+          id_rsa:
+            content: &content aabbccdd
+            validate: false
+    partitions: &partitions
+      ops:
+        policy:
+          account: manage
+        filters:
+          - ops
+    resources:
+      ssh_private_key:
+        'ops:ops:id_rsa':
+          action: create
+          properties:
+            user: ops
+            content: *content
+    assertions:
+      private_key:
+        'ops:ops:id_rsa':
+          it:
+            - exist
+          content:
+            - [eq, *content]
+    idempotent: true
+  - resources:
+      ssh_private_key:
+        'ops:ops:id_rsa':
+          action: remove
+          properties:
+            user: ops
+    assertions:
+      private_key:
+        'ops:ops:id_rsa':
+          it:
+            - not exist

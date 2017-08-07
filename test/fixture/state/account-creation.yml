@@ -1,0 +1,15 @@
+clients:
+  ops:
+    roles:
+      ops: ~
+partitions:
+  ops:
+    filters:
+      - ops
+    policy:
+      account: manage
+      group: none
+state:
+  accounts:
+    ops:
+      policy: manage

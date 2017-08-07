@@ -1,0 +1,26 @@
+clients:
+  ops:
+    roles:
+      ops: ~
+  cto:
+    roles:
+      cto: ~
+partitions:
+  ops:
+    policy:
+      group: none
+      account: edit
+    filters:
+      - ops
+  cto:
+    policy:
+      group: none
+      account: manage
+    filters:
+      - cto
+state:
+  accounts:
+    ops:
+      policy: edit
+    cto:
+      policy: manage

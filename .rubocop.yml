@@ -1,0 +1,19 @@
+AllCops:
+  Exclude:
+    - files/default/vendor/**/*
+    - vendor/**/*
+    - tmp/**/*
+  TargetRubyVersion: 2.3
+  DisplayCopNames: true
+
+Metrics/MethodLength:
+  Max: 15
+
+Style/ConditionalAssignment:
+  Enabled: false
+
+Bundler/OrderedGems:
+  Enabled: false
+
+Metrics/AbcSize:
+  Max: 20

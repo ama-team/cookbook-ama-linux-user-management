@@ -1,0 +1,31 @@
+clients:
+  ops:
+    roles:
+      ops: ~
+    public_keys:
+      id_rsa: aabbccdd
+partitions:
+  root-access:
+    filters:
+      - ops
+    policy:
+      group: none
+      account: manage
+    impersonation:
+      root: ~
+state:
+  accounts:
+    root:
+      policy: edit
+      public_keys:
+        ops:
+          id_rsa:
+            content: aabbccdd
+            owner: ops
+    ops:
+      policy: manage
+      public_keys:
+        ops:
+          id_rsa:
+            content: aabbccdd
+            owner: ops

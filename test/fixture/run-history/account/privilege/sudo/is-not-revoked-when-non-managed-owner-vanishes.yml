@@ -1,0 +1,50 @@
+runs:
+  - clients: &clients
+      ops:
+        roles:
+          sudo: ~
+      cto:
+        roles:
+          sudo: ~
+    partitions:
+      sudo:
+        policy:
+          group: none
+          account: edit
+        filters:
+          - sudo
+        privileges:
+          sudo: ~
+    resources:
+      sudo:
+        'user:ops': install
+        'user:cto': install
+    assertions:
+      user_sudo_privilege:
+        ops:
+          it: exist
+        cto:
+          it: exist
+  - partitions:
+      sudo:
+        policy:
+          group: none
+          account: none
+        filters:
+          - sudo
+        privileges:
+          sudo: ~
+    resources:
+      sudo:
+        'user:ops':
+          action: remove
+          inverse: true
+        'user:cto':
+          action: remove
+          inverse: true
+    assertions:
+      user_sudo_privilege:
+        ops:
+          it: exist
+        cto:
+          it: exist

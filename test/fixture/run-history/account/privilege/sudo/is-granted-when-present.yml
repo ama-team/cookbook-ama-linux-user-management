@@ -1,0 +1,39 @@
+runs:
+  - clients:
+      ops:
+        roles:
+          sudo: ~
+      cto:
+        roles:
+          nopasswd: ~
+    partitions:
+      sudo:
+        policy:
+          group: none
+          account: manage
+        filters:
+          - sudo
+        privileges:
+          sudo: ~
+      nopasswd:
+        policy:
+          group: none
+          account: manage
+        filters:
+          - nopasswd
+        privileges:
+          sudo:
+            nopasswd: true
+    resources:
+      sudo:
+        'user:ops': install
+        'user:cto':
+          action: install
+          properties:
+            nopasswd: true
+    assertions:
+      user_sudo_privilege:
+        ops:
+          it: exist
+        cto:
+          it: exist

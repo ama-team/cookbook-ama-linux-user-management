@@ -1,0 +1,18 @@
+runs:
+  - clients: &clients
+      ops:
+        roles:
+          ops: ~
+    partitions:
+      ops:
+        policy:
+          account: none
+    resources:
+      user:
+        ops: false
+    assertions:
+      user:
+        ops:
+          it:
+            - not exist
+    idempotent: true

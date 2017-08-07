@@ -1,0 +1,13 @@
+runs:
+  - partitions:
+      ops:
+        policy:
+          group: none
+    resources:
+      group:
+        ops: false
+    assertions:
+      group:
+        ops:
+          it:
+            - not exist

@@ -1,0 +1,28 @@
+runs:
+  - clients:
+      ops:
+        roles:
+          ops: ~
+    partitions: &partitions
+      ops:
+        policy:
+          account: manage
+        filters:
+          - ops
+    resources:
+      user:
+        ops: create
+    assertions:
+      user:
+        ops:
+          it:
+            - exist
+    idempotent: true
+  - partitions: *partitions
+    resources:
+      user:
+        ops: remove
+    assertions:
+      user:
+        ops:
+          it: not exist

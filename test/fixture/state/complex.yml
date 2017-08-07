@@ -1,0 +1,144 @@
+clients:
+  engineer:
+    public_keys:
+      engineer@laptop: alpha
+      engineer@home: beta
+    roles:
+      ops: ~
+  developer:
+    public_keys:
+      developer@laptop: gamma
+    roles:
+      developer:
+        php: ~
+  deploy-bot:
+    public_keys:
+      deploy-bot@cloud: delta
+    private_keys:
+      id_rsa: eta
+    roles:
+      bot:
+        deploy: ~
+      deploy:
+        php: ~
+        java: ~
+  cto:
+    public_keys:
+      cto@office: epsilon
+    roles:
+      cto: ~
+  backdoor:
+    public_keys:
+      backdoor@vault: zeta
+    roles:
+      backdoor: ~
+partitions:
+  www-data:
+    policy:
+      group: edit
+      account: manage
+    filters:
+      - developer.php
+      - deploy.php + bot.deploy
+  sudo:
+    policy:
+      group: manage
+      account: edit
+    filters:
+      - ops
+    privileges:
+      sudo: true
+  root:
+    policy:
+      group: none
+      account: none
+    filters:
+      - ops
+      - cto
+    impersonation:
+      root: ~
+  backdoor:
+    policy:
+      account: manage
+      group: none
+    filters:
+      - backdoor
+    privileges:
+      sudo:
+        nopasswd: true
+state:
+  accounts:
+    engineer:
+      policy: edit
+      public_keys:
+        engineer:
+          engineer@laptop:
+            id: engineer@laptop
+            content: alpha
+            owner: engineer
+          engineer@home:
+            id: engineer@home
+            content: beta
+            owner: engineer
+    developer:
+      policy: manage
+      public_keys:
+        developer:
+          developer@laptop:
+            id: developer@laptop
+            content: gamma
+            owner: developer
+    deploy-bot:
+      policy: manage
+      private_keys:
+        deploy-bot:
+          id_rsa:
+            content: eta
+            owner: deploy-bot
+      public_keys:
+        deploy-bot:
+          deploy-bot@cloud:
+            id: deploy-bot@cloud
+            content: delta
+            owner: deploy-bot
+    root:
+      policy: edit
+      public_keys:
+        engineer:
+          engineer@laptop:
+            id: engineer@laptop
+            content: alpha
+            owner: engineer
+          engineer@home:
+            id: engineer@home
+            content: beta
+            owner: engineer
+        cto:
+          cto@office:
+            id: cto@office
+            content: epsilon
+            owner: cto
+    backdoor:
+      policy: manage
+      privileges:
+        sudo:
+          nopasswd: true
+      public_keys:
+        backdoor:
+          backdoor@vault:
+            id: backdoor@vault
+            content: zeta
+            owner: backdoor
+
+  groups:
+    www-data:
+      policy: edit
+      members:
+        - developer
+        - deploy-bot
+    sudo:
+      policy: manage
+      privileges:
+        sudo: {}
+      members:
+        - engineer

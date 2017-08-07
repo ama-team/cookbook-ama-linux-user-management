@@ -1,0 +1,21 @@
+runs:
+  - partitions:
+      ops:
+        policy:
+          group: manage
+    resources:
+      group:
+        ops: create
+    assertions:
+      group:
+        ops:
+          it:
+            - exist
+  - resources:
+      group:
+        ops: remove
+    assertions:
+      group:
+        ops:
+          it:
+            - not exist

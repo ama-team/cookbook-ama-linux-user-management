@@ -1,0 +1,35 @@
+runs:
+  - clients: &clients
+      ops:
+        roles:
+          sudo: ~
+    partitions:
+      sudo:
+        policy:
+          group: none
+          account: manage
+        filters:
+          - sudo
+        privileges:
+          sudo: ~
+    resources:
+      sudo:
+        'user:ops': install
+    assertions:
+      user_sudo_privilege:
+        ops:
+          it: exist
+  - partitions:
+      sudo:
+        policy:
+          group: none
+          account: manage
+        filters:
+          - sudo
+    resources:
+      sudo:
+        'user:ops': remove
+    assertions:
+      user_sudo_privilege:
+        ops:
+          it: not exist

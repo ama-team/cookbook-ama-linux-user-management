@@ -1,0 +1,24 @@
+runs:
+  - clients:
+      ops:
+        roles:
+          ops: ~
+        public_keys:
+          id_rsa:
+            content: &content aabbccdd
+            validate: false
+    partitions:
+      ops:
+        filters:
+          - ops
+        impersonation:
+          cto: ~
+    resources:
+      template:
+        /home/cto/.ssh/authorized_keys:
+          action: create
+    assertions:
+      public_key:
+        'root:ops:id_rsa':
+          it: exist
+          content: [eq, *content]

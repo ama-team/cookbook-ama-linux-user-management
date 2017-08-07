@@ -1,0 +1,23 @@
+runs:
+  - clients:
+      ops:
+        roles:
+          ops: ~
+        public_keys:
+          id_rsa:
+            content: aabbccdd
+            validate: false
+    partitions:
+      ops:
+        filters:
+          - ops
+        impersonation:
+          cto: ~
+    resources:
+      user:
+        cto:
+          action: create
+    assertions:
+      user:
+        cto:
+          it: exist

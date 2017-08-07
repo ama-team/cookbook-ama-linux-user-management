@@ -1,0 +1,20 @@
+runs:
+  - partitions:
+      ops:
+        policy:
+          group: edit
+      cto:
+        policy:
+          group: manage
+    resources:
+      group:
+        ops: create
+        cto: create
+    assertions:
+      group:
+        ops:
+          it:
+            - exist
+        cto:
+          it:
+            - exist

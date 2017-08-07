@@ -1,0 +1,25 @@
+clients:
+  ops:
+    roles:
+      ops: ~
+partitions:
+  pin:
+    policy:
+      group: none
+      account: manage
+    filters:
+      - ops
+  sudo:
+    policy:
+      group: none
+      account: none
+    privileges:
+      sudo: true
+    filters:
+      - ops
+state:
+  accounts:
+    ops:
+      privileges:
+        sudo: true
+      policy: manage

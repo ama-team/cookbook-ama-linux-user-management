@@ -1,0 +1,50 @@
+runs:
+  - clients: &clients
+      ops:
+        roles:
+          ops: ~
+      cto:
+        roles:
+          cto: ~
+    partitions: &partitions
+      ops: &ops_partition
+        policy:
+          account: edit
+        filters:
+          - ops
+      cto:
+        policy:
+          account: edit
+        filters:
+          - cto
+    resources:
+      user:
+        ops: create
+        cto: create
+    assertions: &assertions
+      user:
+        ops:
+          it:
+            - exist
+        cto:
+          it:
+            - exist
+    idempotent: true
+  - clients: *clients
+    partitions: &partitions
+      ops: *ops_partition
+      cto:
+        policy:
+          account: none
+    resources:
+      user:
+        ops: create
+        cto: false
+    assertions: *assertions
+  - clients: &clients
+    resources:
+      user:
+        ops: false
+        cto: false
+    assertions: *assertions
+    idempotent: true

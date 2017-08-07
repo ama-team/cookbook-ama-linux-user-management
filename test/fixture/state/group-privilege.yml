@@ -1,0 +1,12 @@
+partitions:
+  sudo:
+    policy:
+      group: manage
+    privileges:
+      sudo: true
+state:
+  groups:
+    sudo:
+      policy: manage
+      privileges:
+        sudo: true

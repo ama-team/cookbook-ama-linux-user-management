@@ -1,0 +1,26 @@
+runs:
+  - partitions:
+      sudo:
+        policy:
+          group: manage
+        privileges:
+          sudo: ~
+      sudosudo:
+        policy:
+          group: manage
+        privileges:
+          sudo:
+            nopasswd: true
+    resources:
+      sudo:
+        'group:sudo': install
+        'group:sudosudo':
+          action: install
+          options:
+            nopasswd: true
+    assertions:
+      group_sudo_privilege:
+        sudo:
+          it: exist
+        sudosudo:
+          it: exist

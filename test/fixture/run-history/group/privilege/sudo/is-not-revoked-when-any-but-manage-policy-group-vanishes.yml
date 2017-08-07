@@ -1,0 +1,60 @@
+runs:
+  - partitions:
+      sudo:
+        policy:
+          group: edit
+        privileges:
+          sudo: ~
+      sudosudo:
+        policy:
+          group: edit
+        privileges:
+          sudo: ~
+    resources:
+      sudo:
+        'group:sudo': install
+        'group:sudosudo': install
+    assertions:
+      group_sudo_privilege:
+        sudo:
+          it: exist
+        sudosudo:
+          it: exist
+  - partitions:
+      sudo:
+        policy:
+          group: edit
+        privileges:
+          sudo: ~
+      sudosudo:
+        policy:
+          group: none
+        privileges:
+          sudo: ~
+    resources:
+      sudo:
+        'group:sudo': install
+        'group:sudosudo':
+          action: remove
+          inverse: true
+    assertions:
+      group_sudo_privilege:
+        sudo:
+          it: exist
+        sudosudo:
+          it: exist
+  - resources:
+      sudo:
+        'group:sudo':
+          action: remove
+          inverse: true
+        'group:sudosudo':
+          action: remove
+          inverse: true
+    assertions:
+      group_sudo_privilege:
+        sudo:
+          it: exist
+        sudosudo:
+          it: exist
+
