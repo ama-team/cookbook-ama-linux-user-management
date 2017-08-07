@@ -33,6 +33,9 @@ describe 'recipe' do
 
     ::AMA::Chef::User::Test::Fixture::RunHistory.each do |history|
       it "should comply with history '#{history.name}'" do |test_case|
+        # Tell CI we're still alive
+        puts "Validating history #{history.name}"
+
         current_state = ::AMA::Chef::User::Model::State.new
 
         history.runs.each do |run|
