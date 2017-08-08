@@ -21,5 +21,5 @@ group :testing do
 end
 
 group :vendor do
-  gem 'ama-entity-mapper'
+  gem 'ama-entity-mapper', '~> 0.1.0'
 end

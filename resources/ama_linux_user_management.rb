@@ -13,8 +13,9 @@ action_class do
   def clients
     clients = new_resource.clients
     unless clients
-      clients = data_bag('clients').map do |id|
-        [id, data_bag_item('clients', id)]
+      data_bag_name = node['ama']['user']['client-bag'] || 'clients'
+      clients = data_bag(data_bag_name).map do |id|
+        [id, data_bag_item(data_bag_name, id)]
       end
       clients = Hash[clients]
     end
