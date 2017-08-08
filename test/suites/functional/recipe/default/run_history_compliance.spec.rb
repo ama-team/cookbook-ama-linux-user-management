@@ -31,12 +31,12 @@ describe 'Functional' do
     ::AMA::Chef::User::Test::ChefSpec::RunnerFactory.new(options)
   end
 
-  ::AMA::Chef::User::Test::Fixture::RunHistory.each do |history|
-    next unless history.functional
-
+  histories = ::AMA::Chef::User::Test::Fixture::RunHistory.select(&:functional)
+  histories.each_with_index do |history, index|
     it ":: #{history.name.capitalize}" do |test_case|
       # Tell CI we're still alive
-      puts "#{Time.now.utc.iso8601} Validating history #{history.name}"
+      counter = "[#{index + 1}/#{histories.size}]"
+      puts "#{Time.now.utc.iso8601} #{counter} Validating history #{history.name}"
 
       current_state = ::AMA::Chef::User::Model::State.new
 
