@@ -9,7 +9,7 @@ module AMA
         module Fixture
           class RunHistory
             class ResourceMatcher
-              include Entity::Mapper::DSL
+              include AMA::Entity::Mapper::DSL
 
               attribute :type, Symbol
               attribute :name, String

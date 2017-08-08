@@ -12,7 +12,7 @@ module AMA
         module Fixture
           class RunHistory
             class Run
-              include Entity::Mapper::DSL
+              include AMA::Entity::Mapper::DSL
 
               attribute :id, Integer, nullable: true
               attribute :clients, [Hash, K: Symbol, V: Model::Client], default: {}

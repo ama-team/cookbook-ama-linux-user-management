@@ -11,7 +11,7 @@ module AMA
       module Test
         module Fixture
           class State
-            include Entity::Mapper::DSL
+            include AMA::Entity::Mapper::DSL
 
             attribute :id, String, nullable: true
             attribute :name, String, nullable: true

@@ -11,7 +11,7 @@ module AMA
         module Fixture
           class RunHistory
             class Assertions
-              include Entity::Mapper::DSL
+              include AMA::Entity::Mapper::DSL
 
               type = [Enumerable, T: Assertion]
               attribute :content, type, default: [], virtual: true

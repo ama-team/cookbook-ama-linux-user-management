@@ -11,7 +11,7 @@ module AMA
         module Fixture
           class RunHistory
             class ResourceMatchers
-              include Entity::Mapper::DSL
+              include AMA::Entity::Mapper::DSL
 
               type = [Enumerable, T: ResourceMatcher]
               attribute :content, type, virtual: true
