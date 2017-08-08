@@ -20,6 +20,6 @@ class PublicKey < Inspec.resource(1)
   end
 
   def to_s
-    "PublicKey #{@definition}"
+    "public key #{@definition}"
   end
 end

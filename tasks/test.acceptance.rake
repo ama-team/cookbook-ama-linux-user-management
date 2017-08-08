@@ -12,11 +12,15 @@ root = ::File.dirname(__dir__)
 
 namespace :test do
   task :acceptance, [:platform] do |_, arguments|
-    command = 'bundle exec kitchen test'
-    command += ' ' + arguments[:platform] if arguments[:platform]
-    command += ' --concurrency'
-    sh command
-    Rake::Task[:'test:acceptance:allurize'].invoke
+    begin
+      Rake::Task[:'test:acceptance:setup'].invoke
+      command = 'bundle exec kitchen test'
+      command += ' ' + arguments[:platform] if arguments[:platform]
+      command += ' --concurrency'
+      sh command
+    ensure
+      Rake::Task[:'test:acceptance:allurize'].invoke
+    end
   end
 
   namespace :acceptance do

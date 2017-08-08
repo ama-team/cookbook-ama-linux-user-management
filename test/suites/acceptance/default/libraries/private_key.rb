@@ -20,6 +20,6 @@ class PrivateKey < Inspec.resource(1)
   end
 
   def to_s
-    "PrivateKey #{@definition}"
+    "private key #{@definition}"
   end
 end

@@ -14,12 +14,12 @@ class SshConfigEntry < Inspec.resource(1)
   end
 
   def method_missing(name)
-    @entry[name.to_s] if @entry
+    return @entry[name.to_s] if @entry
     super
   end
 
-  def respond_to_missing?
-    true
+  def respond_to_missing?(name, *)
+    @entry && @entry.key?(name)
   end
 
   def exist?
