@@ -1,5 +1,5 @@
 runs:
-  - clients:
+  - clients: &clients
       ops:
         roles:
           ops: ~
@@ -8,7 +8,11 @@ runs:
             content: &content aabbccdd
             validate: false
     partitions: &partitions
-      ops: ~
+      ops:
+        filters:
+          - ops
+        policy:
+          account: manage
     resources:
       template:
         /home/ops/.ssh/authorized_keys: create
@@ -19,11 +23,7 @@ runs:
             - exist
           content:
             - [eq, *content]
-  - clients:
-      ops:
-        roles:
-          ops: ~
-    partitions: *partitions
+  - clients: *clients
     resources:
       file:
         /home/ops/.ssh/authorized_keys: delete
