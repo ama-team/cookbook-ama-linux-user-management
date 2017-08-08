@@ -17,7 +17,7 @@ module AMA
             end
 
             def apply(resource_factory)
-              resource_factory.user @account.id
+              resource_factory.user @account.id.to_s
             end
           end
         end

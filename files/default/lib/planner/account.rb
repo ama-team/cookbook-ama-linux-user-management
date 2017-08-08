@@ -51,6 +51,7 @@ module AMA
           # @param [AMA::Chef::User::Model::Account] current_state
           # @param [AMA::Chef::User::Model::Account] desired_state
           def process_public_keys(current_state, desired_state)
+            return [] if desired_state.nil? && !current_state.policy.remove?
             account = desired_state || current_state
             current_keys = current_state ? current_state.public_keys : {}
             desired_keys = desired_state ? desired_state.public_keys : {}
@@ -60,6 +61,7 @@ module AMA
           # @param [AMA::Chef::User::Model::Account] current_state
           # @param [AMA::Chef::User::Model::Account] desired_state
           def process_private_keys(current_state, desired_state)
+            return [] if desired_state.nil? && !current_state.policy.remove?
             account = desired_state || current_state
             current_keys = current_state ? current_state.private_keys : {}
             desired_keys = desired_state ? desired_state.private_keys : {}

@@ -16,7 +16,7 @@ module AMA
             end
 
             def apply(resource_factory)
-              resource_factory.user @account.id do
+              resource_factory.user @account.id.to_s do
                 action :remove
               end
             end

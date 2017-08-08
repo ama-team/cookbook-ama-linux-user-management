@@ -5,13 +5,13 @@ require 'logger'
 require 'time'
 
 require_relative '../../../../support/chefspec/runner_factory'
-require_relative '../../../../support/fixture/run_history'
+require_relative '../../../../support/cookbooks/alum-testing/files/default/lib/fixture/run_history'
 require_relative '../../../../../files/default/lib/model/state'
 require_relative '../../../../../files/default/lib/planner'
 require_relative '../../../../../files/default/lib/state/builder'
 require_relative '../../../../../files/default/lib/state/persister'
 
-recipe = 'alum-functional::accumulator'
+recipe = 'alum-testing::functional'
 
 describe 'recipe' do
   describe recipe do

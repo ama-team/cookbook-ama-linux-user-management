@@ -9,12 +9,12 @@ parent_cookbook_metadata_path = File.join(parent_cookbook_path, 'metadata.rb')
 parent_metadata = Chef::Cookbook::Metadata.new
 parent_metadata.from_file(parent_cookbook_metadata_path)
 
-name             'alum-functional'
+name             'alum-testing'
 maintainer       parent_metadata.maintainer
 maintainer_email parent_metadata.maintainer_email
 license          'All rights reserved'
-description      'Installs/Configures alum-functional'
-long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
+description      'Provides testing support for ama-linux-user-management cookbook'
+long_description 'Provides testing support for ama-linux-user-management cookbook'
 version          parent_metadata.version
 
 depends parent_metadata.name

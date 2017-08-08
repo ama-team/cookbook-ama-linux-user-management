@@ -4,7 +4,7 @@ require 'yaml'
 
 require_relative '../../../files/default/lib/planner'
 require_relative '../../../files/default/lib/model/state'
-require_relative '../../support/fixture/state'
+require_relative '../../support/cookbooks/alum-testing/files/default/lib/fixture/state'
 
 klass = ::AMA::Chef::User::Planner
 state_klass = ::AMA::Chef::User::Model::State

@@ -4,8 +4,6 @@ require 'ama-entity-mapper'
 
 require_relative 'resource_matchers'
 require_relative 'assertions'
-require_relative '../../../../files/default/lib/model/partition'
-require_relative '../../../../files/default/lib/model/client'
 
 module AMA
   module Chef

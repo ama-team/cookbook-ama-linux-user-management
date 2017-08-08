@@ -33,6 +33,15 @@ module AMA
                 end
                 block.call(input, type, context)
               end
+
+              def to_def
+                prop = property == :it ? '' : property
+                "#{type}[#{name}].#{prop} should #{content.join(' ')}"
+              end
+
+              def to_s
+                "Assertion: #{to_def}"
+              end
             end
           end
         end

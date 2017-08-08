@@ -26,13 +26,6 @@ namespace :test do
     end
   end
 
-  task :acceptance, [:platform] do |_, arguments|
-    command = 'bundle exec kitchen test'
-    command += ' ' + arguments[:platform] if arguments[:platform]
-    command += ' --concurrency'
-    sh command
-  end
-
   task :all, [:platform] => %i[unit integration functional acceptance]
 
   [:unit, :integration, :functional, acceptance: [:platform]].each do |type|

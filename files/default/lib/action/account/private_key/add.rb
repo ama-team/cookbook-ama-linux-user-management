@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/AbcSize
+
 require_relative '../../../action'
 
 module AMA
@@ -27,6 +29,9 @@ module AMA
                   id key.id.to_s
                   user account.id.to_s
                   content key.content.to_s
+                  install_public_key key.install_public_key
+                  passphrase key.passphrase unless key.passphrase.nil?
+                  perform_validation key.validate
                 end
               end
             end

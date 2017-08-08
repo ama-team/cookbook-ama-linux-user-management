@@ -21,6 +21,7 @@ module AMA
 
               def apply(resource_factory)
                 resource_id = "#{ssh_directory(@account.id)}/authorized_keys"
+                ::Chef::Log.debug("Purging ssh keys for account #{@account.id}")
                 resource_factory.file resource_id do
                   action :delete
                 end

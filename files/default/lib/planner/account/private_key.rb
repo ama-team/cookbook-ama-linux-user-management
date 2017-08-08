@@ -6,6 +6,7 @@ require_relative 'private_key/remote'
 require_relative '../../action/account/private_key/add'
 require_relative '../../action/account/private_key/remove'
 require_relative '../../action/account/private_key/purge'
+require_relative '../../action/account/public_key/add'
 
 module AMA
   module Chef
@@ -57,6 +58,10 @@ module AMA
 
             def ns
               ::AMA::Chef::User::Action::Account::PrivateKey
+            end
+
+            def pubkey_ns
+              ::AMA::Chef::User::Action::Account::PublicKey
             end
           end
         end

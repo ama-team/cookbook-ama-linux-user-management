@@ -4,9 +4,6 @@ require 'yaml'
 require 'ama-entity-mapper'
 
 require_relative 'loader'
-require_relative '../../../files/default/lib/model/client'
-require_relative '../../../files/default/lib/model/partition'
-require_relative '../../../files/default/lib/model/state'
 
 module AMA
   module Chef

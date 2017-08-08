@@ -5,10 +5,12 @@ driver:
 provisioner:
   name: chef_zero
   always_update_cookbooks: true
+  log_level: "<%= ENV['CHEF_LOG_LEVEL'] || 'info' %>"
 verifier:
   name: inspec
-  format: junit
-  output: test/metadata/acceptance/junit/%{platform}-%{suite}.xml
+  format: "<% if ENV['INSPEC_DEBUG'] %>documentation<% else %>junit<% end %>"
+  output: "<% if ENV['INSPEC_DEBUG'] %>-<% else %>test/metadata/junit/acceptance/TEST-%{platform}-%{suite}.xml<%
+    end %>"
 platforms:
 - name: ubuntu-14.04
 - name: ubuntu-16.04
@@ -17,7 +19,7 @@ platforms:
 suites:
 - name: complex-case-1
   run_list:
-  - alum-acceptance
+  - alum-testing::acceptance
   attributes:
     history: complex/case-1
   verifier:

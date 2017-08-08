@@ -20,7 +20,7 @@ module AMA
             class << self
               def configure(suite, coverage: true, chefspec: false)
                 ::RSpec.configure do |config|
-                  config.pattern = '**/*.spec.rb'
+                  config.pattern = "#{suite}/**/*.spec.rb"
                   configure_allure(config, suite) unless ENV['DISABLE_ALLURE']
                   configure_chefspec(config, suite) if chefspec
                   configure_coverage(suite) if coverage
@@ -34,6 +34,10 @@ module AMA
                 (0..2).reduce(__dir__) do |path|
                   ::File.dirname(path)
                 end
+              end
+
+              def library_root
+                ::File.join(project_root, 'files/default/lib')
               end
 
               def configure_allure(rspec_config, suite)
@@ -56,7 +60,7 @@ module AMA
               end
 
               def configure_coverage(suite)
-                root = Pathname.new(project_root)
+                root = library_root
                 Coveralls.wear_merged! do
                   command_name "rspec:#{suite}"
                   coverage_dir 'test/metadata/coverage'
@@ -65,14 +69,13 @@ module AMA
                     Coveralls::SimpleCov::Formatter
                   ]
                   add_filter do |file|
-                    path = Pathname.new(file.filename).relative_path_from(root)
-                    path.to_s !~ /^lib/
+                    !file.filename.start_with?(root)
                   end
                 end
               end
 
               def load_files
-                pattern = ::File.join(project_root, 'lib', '**', '*.rb')
+                pattern = ::File.join(library_root, '**/*.rb')
                 Dir.glob(pattern).each do |path|
                   require(path.sub(/\.rb$/, ''))
                 end

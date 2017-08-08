@@ -8,7 +8,7 @@ require_relative '../../../../files/default/lib/model/partition'
 require_relative '../../../../files/default/lib/model/account'
 require_relative '../../../../files/default/lib/model/group'
 require_relative '../../../../files/default/lib/model/state'
-require_relative '../../../support/fixture/state'
+require_relative '../../../support/cookbooks/alum-testing/files/default/lib/fixture/state'
 
 klass = AMA::Chef::User::State::Builder
 fixture_class = AMA::Chef::User::Test::Fixture::State

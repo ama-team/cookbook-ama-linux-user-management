@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
+require 'chef'
+
 root = ::File.dirname(__dir__)
 vendor_dir = ::File.join(root, 'files', 'default', 'vendor')
 spec_pattern = ::File.join(vendor_dir, 'specifications', '*.gemspec')
 Dir.glob(spec_pattern).each do |spec_path|
   spec = Gem::Specification.load(spec_path)
-  Chef::Log.debug("Loading vendored gem #{spec.name} #{spec.version}")
+  ::Chef::Log.debug("Loading vendored gem #{spec.name} #{spec.version}")
   spec.require_paths.each do |require_path|
     directory = "#{spec.name}-#{spec.version}"
     path = ::File.join(vendor_dir, 'gems', directory, require_path)

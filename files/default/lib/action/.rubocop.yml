@@ -1,4 +1,5 @@
 inherit_from:
-  - ../../.rubocop.yml
+  - ../.rubocop.yml
+
 Style/Documentation:
   Enabled: false

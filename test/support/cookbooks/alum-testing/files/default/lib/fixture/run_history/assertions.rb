@@ -43,6 +43,10 @@ module AMA
               def initialize
                 @content = []
               end
+
+              def to_s
+                "Assertions: #{content.map(&:to_def).join(', ')}"
+              end
             end
           end
         end

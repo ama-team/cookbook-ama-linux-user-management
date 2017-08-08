@@ -22,7 +22,8 @@ module AMA
               def apply(resource_factory)
                 account = @account
                 key = @key
-                resource_factory.ssh_authorize_key key.full_id do
+                id = "#{account.id}:#{key.owner}:#{key.id}"
+                resource_factory.ssh_authorize_key id do
                   user account.id.to_s
                   key key.content
                   keytype key.type.to_s

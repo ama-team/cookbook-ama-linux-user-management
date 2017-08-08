@@ -63,7 +63,7 @@ keys:
       L0kjS5K+i5nQWOpbr85ZQZUgtpKQOSBYhcE7W6w/4AVZ15IT1v6W8adipWwemJnZ
       7MFNQyCFjb64k2bvQP4fKPMRM72z8Ys8DN3e2ss4oCpCAXSfdzFsT5qZB/7IQCCR
       -----END RSA PRIVATE KEY-----
-    passphrase: &key5_passphrase
+    passphrase: &key1_passphrase passphrase-1
   key2:
     public: &key2_public AAAAB3NzaC1yc2EAAAADAQABAAABAQDa5l1pbShsSTSL+Z7hQDBY7Wuoy6kxN7cwwXnJciI679j4B9H5mBrJriQhwgTj9Mc2oqJQAf3lU/63i6Pyf0zJpYcPaDBBOvaJKq3H3KZ7B7k3xiFMF9bwo0+dHlfP2UDK7NEHp/vsi6uuioiwlD6gBd/p3XTfK04+tuJf5REdwa+7dY657UIE1wvlfSjdVhFREcYNOwIkbDU9xQBxpN/F4m16Ji09G30YXyUblaNoR9CHLa9PwkDANo7mOj6vuHeEECZ5+mNavZ1tw2qO0iAKNixeOj4X7Snq6ysIRWcE1LwaqYKbD+c0w8Be+Bbp3Z4ZcY6BqtZCrAF6P6vUH8x9
     private: &key2_private |
@@ -101,6 +101,7 @@ keys:
   key3:
     public: &key3_public AAAAB3NzaC1yc2EAAAADAQABAAABAQDqkq3B/aTwZGuIWe7YEjvqsLR+VPxRymRbsXLINmGSowEfcLlI1vrvFHdHD6DjgtXsIL8M8oFw3rEneFNgsHwTXdQP+UksMaO18zuz5u6YZWSqlGwPvTFRa4jPQmdVTMTZgAs3Das8OHPSioiphB9pj3J59ENhWwZggSmrD8BI++p3lFdDFid3POF7kacOgoLmWJbwGQmD3BOuyjTloc+Bc27pX7T0frgP2g5/Gk5VbVgOLX59On0g3apu/J3h45irHyoCv2tQOQvUOmQHj2UXrL2gJGrXKvT8fvKeZ5ANivN0/3SpxxyRLJbN6IDDO1Rzy10g3FWopUpFFBjRYLe7
     private: &key3_private |
+      -----BEGIN RSA PRIVATE KEY-----
       Proc-Type: 4,ENCRYPTED
       DEK-Info: AES-128-CBC,7C0C3117FBF3F7B40AF0F43A0917BA6D
 
@@ -211,29 +212,37 @@ clients:
         id_rsa:
           content: *key1_private
           install_public_key: true
+          passphrase: *key1_passphrase
           remotes:
             server-1: chef
             server-2: chef
         reserve:
           content: *key2_private
+          passphrase: *key2_passphrase
       public_keys:
         reserve:
           content: *key2_public
     after: &chef_client_after
       roles:
         superuser: ~
+        materialized-sudo: ~
       private_keys:
         id_rsa:
           content: *key1_private
+          passphrase: *key1_passphrase
           install_public_key: true
           remotes:
             server-1: chef
+      public_keys:
+        id_rsa: *key1_public
   # edited user, stays on the node after it has gone
   cto: &cto_client
     roles:
       superuser: ~
     private_keys:
-      id_rsa: *key3_private
+      id_rsa:
+        content: *key3_private
+        passphrase: *key3_passphrase
     public_keys:
       id_rsa: *key3_public
   # managed user, removed from node after it has gone
@@ -242,14 +251,19 @@ clients:
       inspector: ~
       materialized-sudo: ~
     private_keys:
-      id_rsa: *key4_private
+      id_rsa:
+        content: *key4_private
+        passphrase: *key4_passphrase
     public_keys:
       id_rsa: *key4_public
+  # managed user, removed from node after it has gone
   engineer: &engineer_client
     roles:
       engineer: ~
     private_keys:
-      id_rsa: *key5_private
+      id_rsa:
+        content: *key5_private
+        passphrase: *key5_passphrase
     public_keys:
       id_rsa: *key5_public
 
@@ -263,7 +277,7 @@ partitions:
       - superuser
     privileges:
       sudo: ~
-    impersonate:
+    impersonation:
       root: ~
   # gets deleted
   inspection-team: &inspection_partition
@@ -469,22 +483,22 @@ runs:
           it: exist
           groups: include superuser
         inspector:
-          it: exist
-          groups: include inspection-team
+          it: not exist
         engineer:
-          it: exist
-          groups: include engineers
+          it: not exist
         bot:
           it: exist
       group:
         superuser:
           it: exist
         bot-supervisors:
-          it: exist
+          it: not exist
         inspection-team:
-          it: exist
+          it: not exist
         engineers:
-          it: exist
+          it: not exist
+        materialized-sudo:
+          it: not exist
       private_key:
         'chef:chef:id_rsa':
           it: exist
@@ -504,62 +518,42 @@ runs:
         'chef:chef:id_rsa':
           it: exist
           content:
-            - [eq, *key1_public]
+            - [include, *key1_public]
         'chef:chef:reserve':
-          it: exist
-          content:
-            - [eq, *key2_public]
-        'cto:cto:id_rsa':
-          it: exist
-          content:
-            - [eq, *key3_public]
-        'inspector:inspector:id_rsa':
-          it: exist
-          content:
-            - [eq, *key4_public]
-        'engineer:engineer:id_rsa':
-          it: exist
-          content:
-            - [eq, *key5_public]
+          it: not exist
       authorized_keys:
         chef:
           it:
             - [include, *key1_public]
-            - [include, *key2_public]
         cto:
           it:
             - [include, *key3_public]
-        inspector:
-          it:
-            - [include, *key4_public]
-        engineer:
-          it:
-            - [include, *key5_public]
         root:
           it:
             - [include, *key1_public]
-            - [include, *key2_public]
-            - [include, *key3_public]
-            - [include, *key4_public]
-            - [include, *key5_public]
+            - [not, include, *key2_public]
+            - [not, include, *key3_public]
+            - [not, include, *key4_public]
+            - [not, include, *key5_public]
         bot:
           it:
-            - [include, *key1_public]
+            - [not, include, *key1_public]
             - [include, *key2_public]
-      ssh_config:
+      ssh_config_entry:
         'chef:server-1':
           it: exist
-          User: git
+          user: eq chef
         'chef:server-2':
-          it: exist
-          user: git
+          it: not exist
       group_sudo_privilege:
         superuser:
           it: exist
         engineers:
-          it: exist
+          it: not exist
         inspection-team:
-          it: exist
+          it: not exist
       user_sudo_privilege:
         inspector:
+          it: not exist
+        chef:
           it: exist
