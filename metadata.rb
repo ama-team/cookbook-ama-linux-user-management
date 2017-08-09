@@ -9,7 +9,7 @@ license 'MIT'
 description 'Installs/Configures ama-linux-user-management'
 long_description 'Installs/Configures ama-linux-user-management'
 chef_version '>= 12', '< 14'
-version '0.1.0'
+version '0.1.1'
 
 depends 'ssh_authorized_keys', '~> 0.3.0'
 depends 'sudo', '~> 3.5.0'
